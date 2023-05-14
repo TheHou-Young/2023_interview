@@ -5,17 +5,19 @@ class ExerciseDao {
     return await exerciseModel.create({ ...exerciseInfo });
   }
 
-  async updateDeleteStatus(exercise_id) {
+  async updateDeleteStatus(_id) {
     return await exerciseModel.findByIdAndUpdate(
-      { exercise_id },
-      { delete_status: 1 }
+      _id ,
+      { delete_status: 1 },
+      {new : true}
     );
   }
 
   async updateExercise({ _id, exercise_type, exercise_desc, exercise_level }) {
     return await exerciseModel.findByIdAndUpdate(
       { _id },
-      { exercise_type, exercise_desc, exercise_level }
+      { exercise_type, exercise_desc, exercise_level },
+      {new : true}
     );
   }
 

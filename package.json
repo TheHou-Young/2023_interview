@@ -7,6 +7,7 @@
     "dev": "cross-env NODE_ENV=development nodemon bin/www.js"
   },
   "dependencies": {
+    "async": "^3.2.4",
     "consul": "^1.2.0",
     "cookie-parser": "~1.4.4",
     "cross-env": "^7.0.3",
@@ -17,8 +18,8 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "lodash": "^4.17.21",
-    "morgan": "~1.9.1",
     "mongoose": "^7.0.2",
+    "morgan": "~1.9.1",
     "nodemon": "^2.0.21",
     "redis": "^4.6.5"
   }
