@@ -34,6 +34,7 @@ class ExerciseService {
     if (exercise_types.length !== 3) throw new Error("题目类型必须为3种");
     // map函数遍历操作和调用回调函数是同步，会阻塞整个线程直到遍历完成。
     // 如果回调函数中有异步操作，不会等异步操作完成而是往下遍历
+    // TODO——提高响应 async.map等待时间2.x秒
     var result = await async.map(exercise_types ,async ({ exercise_type }) => {
       const temp = await exerciseDao.findExerciseByType({ exercise_type });
       return temp
