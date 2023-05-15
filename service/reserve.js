@@ -2,8 +2,10 @@ const reserveDao = require("../dao/reserve");
 const { isValid } = require("../utils/time/index");
 
 class ReserveService {
+  // 专家上传预约时间
   async createReserve({ current_time }, reserveInfo) {
     const reserve_start = reserveInfo?.reserve_start;
+    // 判断所选的时间是否有效
     const result = isValid(current_time, reserve_start);
     switch (true) {
       case result === "late":
@@ -13,6 +15,7 @@ class ReserveService {
       default:
         break;
     }
+    // 时间有效则创建
     return await reserveDao.createReserve({
       ...reserveInfo,
     });
@@ -28,9 +31,11 @@ class ReserveService {
     return await reserveDao.updateReserve({ _id, reserve_start, reserve_end });
   }
 
+  // 学生选择时间进行预约
   // TODO——成功预约则create面试记录
   async updateReserveStatus({ current_time, _id }) {
     const reserve_start = await reserveDao.getReserveById(_id).reserve_start;
+    // 判断学生当前时间是否有资格预约
     const result = isValid(current_time, reserve_start);
     switch (true) {
       case result === "late":
