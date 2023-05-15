@@ -18,6 +18,16 @@ class ReserveService {
     });
   }
 
+  async updateDeleteStatus(_id) {
+    const result = await reserveDao.updateDeleteStatus(_id);
+    if (_.isNil(result)) throw new Error("不允许删除不存在的预约记录");
+    return result;
+  }
+
+  async updateReserve({ _id, reserve_start, reserve_end }) {
+    return await reserveDao.updateReserve({ _id, reserve_start, reserve_end });
+  }
+
   // TODO——成功预约则create面试记录
   async updateReserveStatus({ current_time, _id }) {
     const reserve_start = await reserveDao.getReserveById(_id).reserve_start;
