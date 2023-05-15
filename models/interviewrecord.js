@@ -12,20 +12,25 @@ const interviewrecordSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // 面试时间
-    interview_date: {
-      type: Date,
+    // 面试开始时间
+    interview_start: {
+      type: Number,
       required: true,
     },
-    // 面试时间段
-    interview_time: {
-      type: String,
+    // 面试结束时间
+    interview_end: {
+      type: Number,
       required: true,
     },
     // 面试房间号
     interview_room: {
       type: Number,
       required: true,
+    },
+    // 面试题目
+    interview_exercises: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'exercise',
     },
     // 面试情况
     interview_evaluation: {

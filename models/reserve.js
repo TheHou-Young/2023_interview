@@ -12,15 +12,14 @@ const reserveSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // 预约日期
-    reserve_date: {
-      type: Date,
+    // 预约开始时间
+    reserve_start: {
+      type: Number,
       required: true,
     },
-    // 预约时间段
-    reserve_time: {
-      type: String,
-      enum: ["8:00-10:00", "14:00-16:00", "19:00-21:00"],
+    // 预约结束时间
+    reserve_end: {
+      type: Number,
       required: true,
     },
     // 是否被预定了
