@@ -11,7 +11,7 @@ router.patch(
   "/reserve/update_reserve_status",
   wrapper(reserveController.updateReserveStatus)
 );
-router.get("/reserve/get", wrapper(reserveController.getReserve));
+// router.get("/reserve/get", wrapper(reserveController.getReserve));
 
 router.post(
   "/reserve/getList_mas",

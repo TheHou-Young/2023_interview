@@ -1,5 +1,6 @@
 const reserveModel = require("../models/reserve");
 const moment = require("moment");
+const _ = require("lodash");
 
 class ReserveDao {
   async createReserve(reserveInfo) {
@@ -32,8 +33,8 @@ class ReserveDao {
       .then((doc) => {
         if (!doc) {
           throw new Error("该面试时间已经被预定");
-        }else{
-            // TODO——预约成功，生成面试记录——加入事务
+        } else {
+          // TODO——预约成功，生成面试记录——加入事务
         }
       });
   }
@@ -48,7 +49,10 @@ class ReserveDao {
     const query = {};
     query.reserve_account = conditions.reserve_account;
     if (conditions?.startTime)
-      query.reserve_start = { $gte: startTime, $lte: endTime };
+      query.reserve_start = {
+        $gte: conditions.startTime,
+        $lte: conditions.endTime,
+      };
     return await reserveModel.find(query);
   }
 
@@ -58,7 +62,10 @@ class ReserveDao {
     if (_.isNil(conditions.reserve_account) === false)
       query.reserve_account = conditions.reserve_account;
     if (conditions?.startTime)
-      query.reserve_start = { $gte: startTime, $lte: endTime };
+      query.reserve_start = {
+        $gte: conditions.startTime,
+        $lte: conditions.endTime,
+      };
     return await reserveModel.find(query);
   }
 }
