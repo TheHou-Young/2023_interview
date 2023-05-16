@@ -1,4 +1,5 @@
 const reserveModel = require("../models/reserve");
+const moment = require("moment");
 
 class ReserveDao {
   async createReserve(reserveInfo) {
@@ -40,15 +41,23 @@ class ReserveDao {
   }
 
   // 查询预约情况学生和专家分开
-  async getReserveList_mas({ reserve_account, current_time, reserve_start }) {
-    
+  // 专家
+  async getReserveList_mas(conditions) {
+    const query = {};
+    query.reserve_account = conditions.reserve_account;
+    if (conditions?.startTime)
+      query.reserve_start = { $gte: startTime, $lte: endTime };
+    return await reserveModel.find(query);
   }
 
-  async getReserveList_stu({ reserve_account, reserve_start }) {
-    const condition = {};
-    if (reserve_account) condition.reserve_account = reserve_account;
-    if (reserve_start) condition.reserve_start = reserve_start;
-    return await reserveModel.find(condition);
+  // 学生
+  async getReserveList_stu(conditions) {
+    const query = {};
+    if (_.isNil(conditions.reserve_account) === false)
+      query.reserve_account = conditions.reserve_account;
+    if (conditions?.startTime)
+      query.reserve_start = { $gte: startTime, $lte: endTime };
+    return await reserveModel.find(query);
   }
 }
 

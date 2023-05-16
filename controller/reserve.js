@@ -33,6 +33,27 @@ class ReserveController {
     const { current_time, _id } = req.body;
     return await reserveService.updateReserveStatus({ current_time, _id });
   }
+
+  async getReserve(req) {
+    const _id = req.query;
+    return await reserveService.getReserveById(_id);
+  }
+
+  async getReserveList_mas(req) {
+    const { reserve_account, reserve_date } = req.body;
+    return await reserveService.getReserveList_mas({
+      reserve_account,
+      reserve_date,
+    });
+  }
+
+  async getReserveList_stu(req) {
+    const { reserve_account, reserve_date } = req.body;
+    return await reserveService.getReserveList_stu({
+      reserve_account,
+      reserve_date,
+    });
+  }
 }
 
 const reserveController = new ReserveController();

@@ -1,5 +1,6 @@
 const reserveDao = require("../dao/reserve");
-const { isValid } = require("../utils/time/index");
+const { isValid, getStartAndEndTime } = require("../utils/time/index");
+const _ = require("lodash");
 
 class ReserveService {
   // 专家上传预约时间
@@ -45,7 +46,36 @@ class ReserveService {
       default:
         break;
     }
+    // 学生进行预约
     return await reserveDao.updateReserveStatus(_id);
+  }
+
+  async getReserveById(_id) {
+    return await reserveDao.getReserveById(_id);
+  }
+
+  async getReserveList_mas({ reserve_account, reserve_date }) {
+    if (_.isNil(reserve_date)) {
+      return await reserveDao.getReserveList_mas({ reserve_account });
+    } else {
+      var startAndEndTime = getStartAndEndTime(reserve_date);
+      return await reserveDao.getReserveList_mas({
+        reserve_account,
+        ...startAndEndTime,
+      });
+    }
+  }
+
+  async getReserveList_stu({ reserve_account, reserve_date }) {
+    if (_.isNil(reserve_date)) {
+      return await reserveDao.getReserveList_stu({ reserve_account });
+    } else {
+      var startAndEndTime = getStartAndEndTime(reserve_date);
+      return await reserveDao.getReserveList_stu({
+        reserve_account,
+        ...startAndEndTime,
+      });
+    }
   }
 }
 
