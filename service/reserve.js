@@ -16,7 +16,7 @@ class ReserveService {
       default:
         break;
     }
-    // 时间有效则创建
+    // TODO——判断时间段是否有重合
     return await reserveDao.createReserve({
       ...reserveInfo,
     });

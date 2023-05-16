@@ -32,6 +32,8 @@ class ReserveDao {
       .then((doc) => {
         if (!doc) {
           throw new Error("该面试时间已经被预定");
+        }else{
+            // TODO——预约成功，生成面试记录——加入事务
         }
       });
   }
