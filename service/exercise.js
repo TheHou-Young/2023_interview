@@ -1,6 +1,7 @@
 const exerciseDao = require("../dao/exercise");
-const async = require('async');
+const async = require("async");
 const _ = require("lodash");
+const {getExerciseType} = require("../public/constant/index.js");
 
 class ExerciseService {
   async createExercise(exerciseInfo) {
@@ -22,6 +23,10 @@ class ExerciseService {
     });
   }
 
+  getExerciseType() {
+    return getExerciseType();
+  }
+
   async findExerciseById(_id) {
     return await exerciseDao.findExerciseById(_id);
   }
@@ -35,9 +40,9 @@ class ExerciseService {
     // map函数遍历操作和调用回调函数是同步，会阻塞整个线程直到遍历完成。
     // 如果回调函数中有异步操作，不会等异步操作完成而是往下遍历
     // TODO——提高响应 async.map等待时间2.x秒
-    var result = await async.map(exercise_types ,async ({ exercise_type }) => {
+    var result = await async.map(exercise_types, async ({ exercise_type }) => {
       const temp = await exerciseDao.findExerciseByType({ exercise_type });
-      return temp
+      return temp;
     });
     // console.log(result);
     return result;

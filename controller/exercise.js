@@ -30,6 +30,10 @@ class ExerciseController {
     });
   }
 
+  getExerciseType(){
+    return exerciseService.getExerciseType();
+  }
+
   async getExerciseById(req) {
     const _id = req.query;
     return await exerciseService.findExerciseById(_id);
