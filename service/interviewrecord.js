@@ -1,5 +1,6 @@
 const interviewrecordDao = require("../dao/interviewrecord");
 const { generateRoomId } = require("../utils/room/index");
+const _ = require("lodash")
 
 class InterviewrecordService {
   // async createRecord({
@@ -19,13 +20,14 @@ class InterviewrecordService {
   // }
 
   async updateDeleteStatus(_id) {
-    return await interviewrecordDao.updateDeleteStatus(_id);
+    const result = await interviewrecordDao.updateDeleteStatus(_id);
+    if (_.isNil(result)) throw new Error("不允许删除不存在的题目");
+    return result;
   }
 
-  async updateRecord({ _id, interview_exercises, interview_evaluation }) {
+  async updateRecord({ _id, interview_evaluation }) {
     return await interviewrecordDao.updateRecord({
       _id,
-      interview_exercises,
       interview_evaluation,
     });
   }

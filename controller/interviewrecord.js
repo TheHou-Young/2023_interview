@@ -7,10 +7,9 @@ class InterviewrecordController {
   }
 
   async updateRecord(req) {
-    const { _id, interview_exercises, interview_evaluation } = req.body;
+    const { _id, interview_evaluation } = req.body;
     return await interviewrecordService.updateRecord({
       _id,
-      interview_exercises,
       interview_evaluation,
     });
   }

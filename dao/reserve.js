@@ -8,7 +8,7 @@ class ReserveDao {
   }
 
   async updateDeleteStatus(_id) {
-    return await reserveModel.findByIdAndUpdate({ _id }, { delete_status: 1 });
+    return await reserveModel.findByIdAndUpdate(_id , { delete_status: 1 });
   }
 
   async updateReserve({ _id, reserve_start, reserve_end }) {

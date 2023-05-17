@@ -7,17 +7,16 @@ class InterviewrecordDao {
 
   async updateDeleteStatus(_id) {
     return await interviewrecordModel.findByIdAndUpdate(
-      { _id },
+      _id ,
       { delete_status: 1 }
     );
   }
 
   // 更新面试记录——系统更新面试题目字段、专家上传面评
-  async updateRecord({ _id, interview_exercises, interview_evaluation }) {
+  async updateRecord({ _id, interview_evaluation }) {
     return await interviewrecordModel.findByIdAndUpdate(
       { _id },
       {
-        interview_exercises,
         interview_evaluation,
       },
       { new: true }
