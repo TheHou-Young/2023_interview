@@ -35,7 +35,7 @@ class InterviewrecordDao {
   }
 
   // 学生获取面试题目
-  async getExercises({ _id }) {
+  async getExercises(_id) {
     const aggregateQuery = [
       {
         $match: {
