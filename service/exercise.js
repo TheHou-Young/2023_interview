@@ -1,7 +1,8 @@
 const exerciseDao = require("../dao/exercise");
+const interviewrecordDao = require("../dao/interviewrecord");
 const async = require("async");
 const _ = require("lodash");
-const {getExerciseType} = require("../public/constant/index.js");
+const { getExerciseType } = require("../public/constant/index.js");
 
 class ExerciseService {
   async createExercise(exerciseInfo) {
@@ -35,16 +36,26 @@ class ExerciseService {
     return await exerciseDao.findExerciseByType({ exercise_type });
   }
 
-  async generateExercises({ exercise_types }) {
+  // 专家生成面试题目，并将题目更新到对应面试记录的数据中
+  async generateExercises({ _id, exercise_types }) {
     if (exercise_types.length !== 3) throw new Error("题目类型必须为3种");
     // map函数遍历操作和调用回调函数是同步，会阻塞整个线程直到遍历完成。
     // 如果回调函数中有异步操作，不会等异步操作完成而是往下遍历
-    // TODO——提高响应 async.map等待时间2.x秒
-    var result = await async.map(exercise_types, async ({ exercise_type }) => {
-      const temp = await exerciseDao.findExerciseByType({ exercise_type });
-      return temp;
+    // TODO——提高响应 async.map等待时间
+    var result = await async.map(exercise_types, async (type) => {
+      const temp = await exerciseDao.findExerciseByType({
+        exercise_type: type,
+      });
+      return temp[0];
     });
-    // console.log(result);
+    const exercises = result.map((exercise) => {
+      return exercise._id;
+    });
+    const res = await interviewrecordDao.updateExercises({
+      _id,
+      interview_exercises: exercises,
+    });
+    console.log(res);
     return result;
   }
 }

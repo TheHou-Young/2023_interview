@@ -44,9 +44,10 @@ class ExerciseController {
     return await exerciseService.findExerciseByType({ exercise_type });
   }
 
+  // _id为面试记录的id
   async generateExercises(req) {
-    const { exercise_types } = req.body;
-    return await exerciseService.generateExercises({ exercise_types });
+    const { _id, exercise_types } = req.body;
+    return await exerciseService.generateExercises({ _id, exercise_types });
   }
 }
 

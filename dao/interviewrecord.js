@@ -6,10 +6,9 @@ class InterviewrecordDao {
   }
 
   async updateDeleteStatus(_id) {
-    return await interviewrecordModel.findByIdAndUpdate(
-      _id ,
-      { delete_status: 1 }
-    );
+    return await interviewrecordModel.findByIdAndUpdate(_id, {
+      delete_status: 1,
+    });
   }
 
   // 更新面试记录——专家上传面评
@@ -24,8 +23,12 @@ class InterviewrecordDao {
   }
 
   // 更新面试记录——系统更新面试题目字段
-  async updateExercises({_id, interview_exercises}){
-
+  async updateExercises({ _id, interview_exercises }) {
+    return await interviewrecordModel.findByIdAndUpdate(
+      { _id },
+      { interview_exercises },
+      { new: true }
+    );
   }
 
   // 专家获取面试记录
@@ -55,7 +58,7 @@ class InterviewrecordDao {
         },
       },
     ];
-    return await interviewrecordModel.aggregate(aggregateQuery)
+    return await interviewrecordModel.aggregate(aggregateQuery);
   }
 }
 
