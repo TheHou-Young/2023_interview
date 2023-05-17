@@ -1,4 +1,6 @@
 const reserveDao = require("../dao/reserve");
+const interviewrecordDao = require("../dao/interviewrecord");
+const { generateRoomId } = require("../utils/room/index");
 const { isValid, getStartAndEndTime } = require("../utils/time/index");
 const _ = require("lodash");
 
@@ -34,7 +36,7 @@ class ReserveService {
 
   // 学生选择时间进行预约
   // TODO——成功预约则create面试记录
-  async updateReserveStatus({ current_time, _id }) {
+  async updateReserveStatus({ current_time, _id, stu_account }) {
     const reserve_start = await reserveDao.getReserveById(_id).reserve_start;
     // 判断学生当前时间是否有资格预约
     const result = isValid(current_time, reserve_start);
@@ -47,7 +49,20 @@ class ReserveService {
         break;
     }
     // 学生进行预约
-    return await reserveDao.updateReserveStatus(_id);
+    const reserveInfo = await reserveDao.updateReserveStatus(_id);
+    // console.log(reserveInfo);
+    // 预约成功则生成面试记录
+    const roomId = generateRoomId();
+    const recordInfo = {
+      interview_mas: reserveInfo.reserve_account,
+      interview_stu: stu_account,
+      interview_start: reserveInfo.reserve_start,
+      interview_end: reserveInfo.reserve_end,
+      interview_room: roomId,
+    };
+    const recordResult = await interviewrecordDao.createRecord(recordInfo);
+    return { reserveInfo, recordResult };
+    // return reserveInfo;
   }
 
   async getReserveById(_id) {

@@ -24,7 +24,7 @@ const interviewrecordSchema = new mongoose.Schema(
     },
     // 面试房间号
     interview_room: {
-      type: Number,
+      type: String,
       required: true,
     },
     // 面试题目

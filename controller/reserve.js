@@ -30,8 +30,12 @@ class ReserveController {
   }
 
   async updateReserveStatus(req) {
-    const { current_time, _id } = req.body;
-    return await reserveService.updateReserveStatus({ current_time, _id });
+    const { current_time, _id, stu_account } = req.body;
+    return await reserveService.updateReserveStatus({
+      current_time,
+      _id,
+      stu_account,
+    });
   }
 
   async getReserve(req) {
