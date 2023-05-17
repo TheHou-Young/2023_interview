@@ -55,7 +55,7 @@ class ExerciseService {
       _id,
       interview_exercises: exercises,
     });
-    console.log(res);
+    // console.log(res);
     return result;
   }
 }

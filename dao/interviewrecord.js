@@ -1,4 +1,5 @@
 const interviewrecordModel = require("../models/interviewrecord");
+const { toObjectId } = require("../utils/objectid/index");
 
 class InterviewrecordDao {
   async createRecord(recordInfo) {
@@ -43,11 +44,10 @@ class InterviewrecordDao {
 
   // 学生获取面试题目
   async getExercises(_id) {
+    const id = toObjectId(_id._id);
     const aggregateQuery = [
       {
-        $match: {
-          _id: { $eq: _id },
-        },
+        $match: { _id: id },
       },
       {
         $lookup: {
@@ -58,7 +58,8 @@ class InterviewrecordDao {
         },
       },
     ];
-    return await interviewrecordModel.aggregate(aggregateQuery);
+    const [result] = await interviewrecordModel.aggregate(aggregateQuery);
+    return result.exercises;
   }
 }
 
