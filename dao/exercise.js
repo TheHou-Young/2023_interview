@@ -1,4 +1,5 @@
 const exerciseModel = require("../models/exercise");
+const _ = require("lodash")
 
 class ExerciseDao {
   async createExercise(exerciseInfo) {
@@ -7,9 +8,9 @@ class ExerciseDao {
 
   async updateDeleteStatus(_id) {
     return await exerciseModel.findByIdAndUpdate(
-      _id ,
+      _id,
       { delete_status: 1 },
-      {new : true}
+      { new: true }
     );
   }
 
@@ -17,7 +18,7 @@ class ExerciseDao {
     return await exerciseModel.findByIdAndUpdate(
       { _id },
       { exercise_type, exercise_desc, exercise_level },
-      {new : true}
+      { new: true }
     );
   }
 
@@ -25,16 +26,26 @@ class ExerciseDao {
     return await exerciseModel.findById(_id);
   }
 
+  // 根据题目类型抽取出一道题
   async findExerciseByType({ exercise_type }) {
     const aggregateQuery = [
       {
         $match: {
           exercise_type: { $eq: exercise_type },
+          delete_status: 0,
         },
       },
       { $sample: { size: 1 } },
     ];
     return await exerciseModel.aggregate(aggregateQuery);
+  }
+
+  async getList({ exercise_type, exercise_level }) {
+    const query = {};
+    query.delete_status = 0;
+    if (_.isNil(exercise_type) === false) query.exercise_type = exercise_type;
+    if (_.isNil(exercise_level) === false) query.exercise_level = exercise_level;
+    return exerciseModel.find(query);
   }
 }
 

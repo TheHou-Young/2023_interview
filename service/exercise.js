@@ -2,7 +2,10 @@ const exerciseDao = require("../dao/exercise");
 const interviewrecordDao = require("../dao/interviewrecord");
 const async = require("async");
 const _ = require("lodash");
-const { getExerciseType } = require("../public/constant/index.js");
+const {
+  getExerciseType,
+  getExerciseLevel,
+} = require("../public/constant/index.js");
 
 class ExerciseService {
   async createExercise(exerciseInfo) {
@@ -24,8 +27,14 @@ class ExerciseService {
     });
   }
 
+  // 获取题目所有类型
   getExerciseType() {
     return getExerciseType();
+  }
+
+  // 获取题目的所有难度级别
+  getExerciseLevel() {
+    return getExerciseLevel();
   }
 
   async findExerciseById(_id) {
@@ -57,6 +66,11 @@ class ExerciseService {
     });
     // console.log(res);
     return result;
+  }
+
+  // 专家根据题型、题目难度查看题库
+  async getList({ exercise_type, exercise_level }) {
+    return await exerciseDao.getList({ exercise_type, exercise_level });
   }
 }
 

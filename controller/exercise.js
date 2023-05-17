@@ -2,7 +2,11 @@ const exerciseService = require("../service/exercise");
 
 class ExerciseController {
   async createExercise(req) {
-    const { exercise_type, exercise_desc, exercise_level = 'simple' } = req.body;
+    const {
+      exercise_type,
+      exercise_desc,
+      exercise_level = "simple",
+    } = req.body;
     return await exerciseService.createExercise({
       exercise_type,
       exercise_desc,
@@ -16,12 +20,7 @@ class ExerciseController {
   }
 
   async updateExercise(req) {
-    const {
-      _id,
-      exercise_type,
-      exercise_desc,
-      exercise_level,
-    } = req.body;
+    const { _id, exercise_type, exercise_desc, exercise_level } = req.body;
     return await exerciseService.updateExercise({
       _id,
       exercise_type,
@@ -30,8 +29,12 @@ class ExerciseController {
     });
   }
 
-  getExerciseType(){
+  getExerciseType() {
     return exerciseService.getExerciseType();
+  }
+
+  getExerciseLevel() {
+    return exerciseService.getExerciseLevel();
   }
 
   async getExerciseById(req) {
@@ -48,6 +51,11 @@ class ExerciseController {
   async generateExercises(req) {
     const { _id, exercise_types } = req.body;
     return await exerciseService.generateExercises({ _id, exercise_types });
+  }
+
+  async getList(req) {
+    const { exercise_type, exercise_level } = req.body;
+    return await exerciseService.getList({ exercise_type, exercise_level });
   }
 }
 

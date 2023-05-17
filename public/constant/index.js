@@ -10,8 +10,20 @@ const Exercise_Type = {
   ],
 };
 
+const Exercise_Level = {
+  exercise_level: [
+    "easy",
+    "middle",
+    "hard",
+  ]
+}
+
 function getExerciseType() {
   return Exercise_Type.exercise_type;
 }
 
-module.exports = { getExerciseType };
+function getExerciseLevel() {
+  return Exercise_Level.exercise_level;
+}
+
+module.exports = { getExerciseType, getExerciseLevel };
