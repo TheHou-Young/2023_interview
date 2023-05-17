@@ -25,6 +25,7 @@ class InterviewrecordService {
     return result;
   }
 
+  // 更新面试记录——专家上传/修改面评
   async updateRecord({ _id, interview_evaluation }) {
     return await interviewrecordDao.updateRecord({
       _id,
@@ -32,10 +33,12 @@ class InterviewrecordService {
     });
   }
 
+  // 专家获取自己参与过的面试的记录
   async getRecordList_mas({ interview_mas }) {
     return await interviewrecordDao.getRecordList_mas({ interview_mas });
   }
 
+  // 学生获取自己参与过的面试的记录
   async getRecordList_stu({ interview_stu }) {
     return await interviewrecordDao.getRecordList_stu({ interview_stu });
   }

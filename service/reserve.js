@@ -70,6 +70,7 @@ class ReserveService {
     return await reserveDao.getReserveById(_id);
   }
 
+  // 专家获取预约列表——只能查询自己的
   async getReserveList_mas({ reserve_account, reserve_date }) {
     if (_.isNil(reserve_date)) {
       return await reserveDao.getReserveList_mas({ reserve_account });
@@ -82,6 +83,7 @@ class ReserveService {
     }
   }
 
+  // 学生获取预约列表——可以选择专家/日期
   async getReserveList_stu({ reserve_account, reserve_date }) {
     if (_.isNil(reserve_date)) {
       return await reserveDao.getReserveList_stu({ reserve_account });

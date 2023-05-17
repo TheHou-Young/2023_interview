@@ -29,6 +29,7 @@ class ReserveController {
     });
   }
 
+  // _id为对应预约数据的id
   async updateReserveStatus(req) {
     const { current_time, _id, stu_account } = req.body;
     return await reserveService.updateReserveStatus({
