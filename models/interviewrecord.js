@@ -28,10 +28,10 @@ const interviewrecordSchema = new mongoose.Schema(
       required: true,
     },
     // 面试题目
-    interview_exercises: {
+    interview_exercises: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'exercise',
-    },
+    }],
     // 面试情况
     interview_evaluation: {
       type: String,

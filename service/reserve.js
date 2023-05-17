@@ -59,6 +59,7 @@ class ReserveService {
       interview_start: reserveInfo.reserve_start,
       interview_end: reserveInfo.reserve_end,
       interview_room: roomId,
+      interview_exercises: [],
     };
     const recordResult = await interviewrecordDao.createRecord(recordInfo);
     return { reserveInfo, recordResult };
