@@ -16,14 +16,22 @@ class InterviewrecordController {
 
   // interview_mas为专家account
   async getRecordList_mas(req) {
-    const { interview_mas } = req.query
-    return await interviewrecordService.getRecordList_mas({ interview_mas })
+    const { interview_mas, page = 1, size = 10 } = req.query
+    return await interviewrecordService.getRecordList_mas({
+      interview_mas,
+      page,
+      size,
+    })
   }
 
   // interview_stu为学生account
   async getRecordList_stu(req) {
-    const { interview_stu } = req.query
-    return await interviewrecordService.getRecordList_stu({ interview_stu })
+    const { interview_stu, page = 1, size = 10 } = req.query
+    return await interviewrecordService.getRecordList_stu({
+      interview_stu,
+      page,
+      size,
+    })
   }
 
   async getExercises(req) {
