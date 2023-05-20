@@ -1,4 +1,5 @@
 const exerciseModel = require('../models/exercise')
+const pagination = require('../utils/pagination')
 const _ = require('lodash')
 
 class ExerciseDao {
@@ -45,10 +46,12 @@ class ExerciseDao {
     query.delete_status = 0
     if (!_.isNil(exercise_type)) query.exercise_type = exercise_type
     if (!_.isNil(exercise_level)) query.exercise_level = exercise_level
-    return exerciseModel
-      .find(query)
-      .skip((page - 1) * size)
-      .limit(size)
+    return await pagination({
+      model: exerciseModel,
+      matchPip: query,
+      listPip: [],
+      options: { page, size },
+    })
   }
 }
 
