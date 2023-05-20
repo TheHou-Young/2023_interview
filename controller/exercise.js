@@ -50,8 +50,13 @@ class ExerciseController {
   }
 
   async getList(req) {
-    const { exercise_type, exercise_level } = req.body
-    return await exerciseService.getList({ exercise_type, exercise_level })
+    const { exercise_type, exercise_level, page = 1, size = 10 } = req.body
+    return await exerciseService.getList({
+      exercise_type,
+      exercise_level,
+      page,
+      size,
+    })
   }
 }
 
