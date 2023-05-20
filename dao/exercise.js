@@ -9,7 +9,7 @@ class ExerciseDao {
 
   async updateDeleteStatus(_id) {
     return await exerciseModel.findByIdAndUpdate(
-      _id,
+      { _id },
       { delete_status: 1 },
       { new: true }
     )
