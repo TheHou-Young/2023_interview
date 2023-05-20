@@ -1,3 +1,5 @@
+const lodash = require('lodash')
+
 const DEFAULT = {
   page: 1,
   size: 10,
@@ -5,6 +7,8 @@ const DEFAULT = {
 
 const pagination = async ({ model, matchPip, listPip, options = DEFAULT }) => {
   const { page = DEFAULT.page, size = DEFAULT.size } = options
+  const newPage = lodash.isNumber(page) ? page : Number(page)
+  const newSize = lodash.isNumber(size) ? page : Number(size)
   const [data] = await model?.aggregate?.([
     {
       $match: matchPip,
@@ -13,8 +17,8 @@ const pagination = async ({ model, matchPip, listPip, options = DEFAULT }) => {
       $facet: {
         list: [
           ...listPip,
-          { $skip: (page - DEFAULT.page) * size },
-          { $limit: size },
+          { $skip: (newPage - DEFAULT.page) * newSize },
+          { $limit: newSize },
         ],
         count: [
           {
