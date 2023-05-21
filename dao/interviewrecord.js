@@ -35,9 +35,21 @@ class InterviewrecordDao {
   }
 
   async getRecordById(_id) {
-    return await interviewrecordModel
-      .findById(_id)
-      .select("interview_mas interview_stu interview_start interview_end interview_room");
+    const id = toObjectId(_id);
+    const aggregateQuery = [
+      {
+        $match: { _id: id },
+      },
+      {
+        $lookup: {
+          from: "exercises",
+          localField: "interview_exercises",
+          foreignField: "_id",
+          as: "exercises",
+        },
+      },
+    ];
+    return await interviewrecordModel.aggregate(aggregateQuery);
   }
 
   // 专家获取面试记录
