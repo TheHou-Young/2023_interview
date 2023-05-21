@@ -92,7 +92,7 @@ class InterviewrecordDao {
 
   // 学生获取面试题目
   async getExercises(_id) {
-    const id = toObjectId(_id._id);
+    const id = toObjectId(_id);
     const aggregateQuery = [
       {
         $match: { _id: id },

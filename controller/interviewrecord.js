@@ -40,7 +40,7 @@ class InterviewrecordController {
   }
 
   async getExercises(req) {
-    const _id = req.query
+    const { _id } = req.query
     return await interviewrecordService.getExercises(_id)
   }
 }
