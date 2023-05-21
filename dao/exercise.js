@@ -1,17 +1,18 @@
-const exerciseModel = require("../models/exercise");
-const _ = require("lodash")
+const exerciseModel = require('../models/exercise')
+const pagination = require('../utils/pagination')
+const _ = require('lodash')
 
 class ExerciseDao {
   async createExercise(exerciseInfo) {
-    return await exerciseModel.create({ ...exerciseInfo });
+    return await exerciseModel.create({ ...exerciseInfo })
   }
 
   async updateDeleteStatus(_id) {
     return await exerciseModel.findByIdAndUpdate(
-      _id,
+      { _id },
       { delete_status: 1 },
       { new: true }
-    );
+    )
   }
 
   async updateExercise({ _id, exercise_type, exercise_desc, exercise_level }) {
@@ -19,11 +20,11 @@ class ExerciseDao {
       { _id },
       { exercise_type, exercise_desc, exercise_level },
       { new: true }
-    );
+    )
   }
 
   async findExerciseById(_id) {
-    return await exerciseModel.findById(_id);
+    return await exerciseModel.findById(_id)
   }
 
   // 根据题目类型抽取出一道题
@@ -36,19 +37,24 @@ class ExerciseDao {
         },
       },
       { $sample: { size: 1 } },
-    ];
-    return await exerciseModel.aggregate(aggregateQuery);
+    ]
+    return await exerciseModel.aggregate(aggregateQuery)
   }
 
-  async getList({ exercise_type, exercise_level }) {
-    const query = {};
-    query.delete_status = 0;
-    if (_.isNil(exercise_type) === false) query.exercise_type = exercise_type;
-    if (_.isNil(exercise_level) === false) query.exercise_level = exercise_level;
-    return exerciseModel.find(query);
+  async getList({ exercise_type, exercise_level, page, size }) {
+    const query = {}
+    query.delete_status = 0
+    if (!_.isNil(exercise_type)) query.exercise_type = exercise_type
+    if (!_.isNil(exercise_level)) query.exercise_level = exercise_level
+    return await pagination({
+      model: exerciseModel,
+      matchPip: query,
+      listPip: [],
+      options: { page, size },
+    })
   }
 }
 
-const exerciseDao = new ExerciseDao();
+const exerciseDao = new ExerciseDao()
 
-module.exports = exerciseDao;
+module.exports = exerciseDao
