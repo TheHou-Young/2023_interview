@@ -9,6 +9,7 @@ router.delete(
   wrapper(interviewrecordController.deleteRecord)
 );
 router.patch("/record/update", wrapper(interviewrecordController.updateRecord));
+router.get("/record/getById", wrapper(interviewrecordController.getRecordById));
 router.get(
   "/record/getList_mas",
   wrapper(interviewrecordController.getRecordList_mas)

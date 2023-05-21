@@ -1,6 +1,6 @@
-const interviewrecordDao = require('../dao/interviewrecord')
-const { generateRoomId } = require('../utils/room/index')
-const _ = require('lodash')
+const interviewrecordDao = require("../dao/interviewrecord");
+const { generateRoomId } = require("../utils/room/index");
+const _ = require("lodash");
 
 class InterviewrecordService {
   // async createRecord({
@@ -20,9 +20,9 @@ class InterviewrecordService {
   // }
 
   async updateDeleteStatus(_id) {
-    const result = await interviewrecordDao.updateDeleteStatus(_id)
-    if (_.isNil(result)) throw new Error('不允许删除不存在的题目')
-    return result
+    const result = await interviewrecordDao.updateDeleteStatus(_id);
+    if (_.isNil(result)) throw new Error("不允许删除不存在的题目");
+    return result;
   }
 
   // 更新面试记录——专家上传/修改面评
@@ -30,7 +30,11 @@ class InterviewrecordService {
     return await interviewrecordDao.updateRecord({
       _id,
       interview_evaluation,
-    })
+    });
+  }
+
+  async getRecordById(_id) {
+    return await interviewrecordDao.getRecordById(_id);
   }
 
   // 专家获取自己参与过的面试的记录
@@ -39,7 +43,7 @@ class InterviewrecordService {
       interview_mas,
       page,
       size,
-    })
+    });
   }
 
   // 学生获取自己参与过的面试的记录
@@ -48,14 +52,14 @@ class InterviewrecordService {
       interview_stu,
       page,
       size,
-    })
+    });
   }
 
   async getExercises(_id) {
-    return await interviewrecordDao.getExercises(_id)
+    return await interviewrecordDao.getExercises(_id);
   }
 }
 
-const interviewrecordService = new InterviewrecordService()
+const interviewrecordService = new InterviewrecordService();
 
-module.exports = interviewrecordService
+module.exports = interviewrecordService;
