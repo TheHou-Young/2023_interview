@@ -22,6 +22,7 @@ const serviceName = "user_manage"
 async function getServiceIP (consul) {
   const url = await consul.getServiceURL(serviceName)
   redisClient.set(serviceName, url)
+  return url
 }
 
 module.exports = { getIPAddress, getServiceIP }
