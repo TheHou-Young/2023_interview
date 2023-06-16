@@ -1,17 +1,17 @@
-const interviewrecordModel = require("../models/interviewrecord");
-const exerciseModel = require("../models/exercise");
-const { toObjectId } = require("../utils/objectid/index");
-const pagination = require("../utils/pagination");
+const interviewrecordModel = require('../models/interviewrecord')
+const exerciseModel = require('../models/exercise')
+const { toObjectId } = require('../utils/objectid/index')
+const pagination = require('../utils/pagination')
 
 class InterviewrecordDao {
   async createRecord(recordInfo) {
-    return await interviewrecordModel.create({ ...recordInfo });
+    return await interviewrecordModel.create({ ...recordInfo })
   }
 
   async updateDeleteStatus(_id) {
     return await interviewrecordModel.findByIdAndUpdate(_id, {
       delete_status: 1,
-    });
+    })
   }
 
   // 更新面试记录——专家上传面评
@@ -22,7 +22,7 @@ class InterviewrecordDao {
         interview_evaluation,
       },
       { new: true }
-    );
+    )
   }
 
   // 更新面试记录——系统更新面试题目字段
@@ -31,25 +31,26 @@ class InterviewrecordDao {
       { _id },
       { interview_exercises },
       { new: true }
-    );
+    )
   }
 
   async getRecordById(_id) {
-    const id = toObjectId(_id);
+    const id = toObjectId(_id)
     const aggregateQuery = [
       {
         $match: { _id: id },
       },
       {
         $lookup: {
-          from: "exercises",
-          localField: "interview_exercises",
-          foreignField: "_id",
-          as: "exercises",
+          from: 'exercises',
+          localField: 'interview_exercises',
+          foreignField: '_id',
+          as: 'exercises',
         },
       },
-    ];
-    return await interviewrecordModel.aggregate(aggregateQuery);
+    ]
+    const [res] = await interviewrecordModel.aggregate(aggregateQuery)
+    return res
   }
 
   // 专家获取面试记录
@@ -60,15 +61,15 @@ class InterviewrecordDao {
       listPip: [
         {
           $lookup: {
-            from: "exercises",
-            localField: "interview_exercises",
-            foreignField: "_id",
-            as: "interview_exercises",
+            from: 'exercises',
+            localField: 'interview_exercises',
+            foreignField: '_id',
+            as: 'interview_exercises',
           },
         },
       ],
       options: { page, size },
-    });
+    })
   }
 
   // 学生获取面试记录
@@ -79,38 +80,38 @@ class InterviewrecordDao {
       listPip: [
         {
           $lookup: {
-            from: "exercises",
-            localField: "interview_exercises",
-            foreignField: "_id",
-            as: "interview_exercises",
+            from: 'exercises',
+            localField: 'interview_exercises',
+            foreignField: '_id',
+            as: 'interview_exercises',
           },
         },
       ],
       options: { page, size },
-    });
+    })
   }
 
   // 学生获取面试题目
   async getExercises(_id) {
-    const id = toObjectId(_id);
+    const id = toObjectId(_id)
     const aggregateQuery = [
       {
         $match: { _id: id },
       },
       {
         $lookup: {
-          from: "exercises",
-          localField: "interview_exercises",
-          foreignField: "_id",
-          as: "exercises",
+          from: 'exercises',
+          localField: 'interview_exercises',
+          foreignField: '_id',
+          as: 'exercises',
         },
       },
-    ];
-    const [result] = await interviewrecordModel.aggregate(aggregateQuery);
-    return result.exercises;
+    ]
+    const [result] = await interviewrecordModel.aggregate(aggregateQuery)
+    return result.exercises
   }
 }
 
-const interviewrecordDao = new InterviewrecordDao();
+const interviewrecordDao = new InterviewrecordDao()
 
-module.exports = interviewrecordDao;
+module.exports = interviewrecordDao

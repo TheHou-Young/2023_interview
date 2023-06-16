@@ -7,8 +7,9 @@ const DEFAULT = {
 
 const pagination = async ({ model, matchPip, listPip, options = DEFAULT }) => {
   const { page = DEFAULT.page, size = DEFAULT.size } = options
+
   const newPage = lodash.isNumber(page) ? page : Number(page)
-  const newSize = lodash.isNumber(size) ? page : Number(size)
+  const newSize = lodash.isNumber(size) ? size : Number(size)
   const [data] = await model?.aggregate?.([
     {
       $match: matchPip,
