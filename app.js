@@ -7,6 +7,7 @@ const httpHeader = require('./middlewares/httpHeader')
 const { loadEnv } = require('./config/env')
 const connectDB = require('./config/db')
 const { loadRouter } = require('./routes/index')
+const consulInstance = require('./middlewares/consul/index');
 
 
 const app = express();
